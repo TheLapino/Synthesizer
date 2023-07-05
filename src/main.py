@@ -9,12 +9,11 @@ def main():
     oscillatorE = SinWaveOscillator(329.63)
     oscillatorG = SinWaveOscillator(392.00)
 
-    wave_valC = oscillatorC.generateSound(0.3)
-    wave_valE = oscillatorE.generateSound(0.3)
-    wave_valG = oscillatorG.generateSound(0.6)
-    
-    wave_val = np.append(wave_valC, wave_valE)
-    wave_val = np.append(wave_val, wave_valG)
+    wave_valC = oscillatorC.generateSound(1.4)
+    wave_valE = oscillatorE.generateSound(1.4)
+    wave_valG = oscillatorG.generateSound(1.4)
+
+    wave_val = (wave_valC + (0.5*wave_valE) + (0.3*wave_valG)) / 1.8
 
 
     wav_file=wave.open("test_audio.wav","w")
