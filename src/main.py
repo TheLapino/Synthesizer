@@ -1,20 +1,21 @@
 from oscillators.SineOscillator import SinWaveOscillator
+from oscillators.SquareOscillator import SquareWaveOscillator
+from oscillators.TriangleOscillator import TriangleWaveOscillator
 import wave
 import struct
 import numpy as np
 
 sample_rate = 44100
 def main():
-    oscillatorC = SinWaveOscillator(261.63)
-    oscillatorE = SinWaveOscillator(329.63)
-    oscillatorG = SinWaveOscillator(392.00)
 
-    wave_valC = oscillatorC.generateSound(1.4)
-    wave_valE = oscillatorE.generateSound(1.4)
-    wave_valG = oscillatorG.generateSound(1.4)
+    #oscillator = SquareWaveOscillator(2)
+    oscillator = TriangleWaveOscillator(220)
 
-    wave_val = (wave_valC + (0.5*wave_valE) + (0.3*wave_valG)) / 1.8
+    wave_val = oscillator.generateSound(2)
 
+    max_amplitude = max(abs(wave_val))
+
+    wave_val = wave_val / max_amplitude
 
     wav_file=wave.open("test_audio.wav","w")
 
