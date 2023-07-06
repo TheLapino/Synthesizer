@@ -1,10 +1,9 @@
 import numpy as np
-from .BaseOscillator import BaseOscillator
 from math import pi
-import sys
-sys.path.append('../src/visualiser')
 
-from visualiser import visualiseSignal
+from src.visualiser.visualiser import visualiseSignal
+from .BaseOscillator import BaseOscillator
+
 
 class TriangleWaveOscillator(BaseOscillator):
 
