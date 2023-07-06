@@ -1,7 +1,8 @@
-from oscillators.SineOscillator import SinWaveOscillator
-from oscillators.SquareOscillator import SquareWaveOscillator
-from oscillators.TriangleOscillator import TriangleWaveOscillator
-from oscillators.SawtoothOscillator import SawtoothWaveOscillator
+from components.oscillators.SineOscillator import SinWaveOscillator
+from components.oscillators.SquareOscillator import SquareWaveOscillator
+from components.oscillators.TriangleOscillator import TriangleWaveOscillator
+from components.oscillators.SawtoothOscillator import SawtoothWaveOscillator
+from components.Enveloppe import EnveloppeADSR
 from visualiser.visualiser import visualiseSignal
 import wave
 import struct
@@ -9,24 +10,27 @@ import numpy as np
 import sounddevice as sd
 
 sample_rate = 44100
-duration = 0.5
+duration = 2
 def main():
 
-    #oscillator = TriangleWaveOscillator(261.63)
-    oscillatorC = TriangleWaveOscillator(261.63)
+    oscillator = SquareWaveOscillator(261.63)
+    oscillatorC = SinWaveOscillator(261.63)
+    oscillatorCC = TriangleWaveOscillator(261.63)
     oscillatorE = TriangleWaveOscillator(329.63)
     oscillatorG = TriangleWaveOscillator(392.00)
 
-    wave_valC = oscillatorC.generateSound(duration)
-    wave_valE = oscillatorE.generateSound(duration)
-    wave_valG = oscillatorG.generateSound(duration)
+    enveloppe = EnveloppeADSR()
+
+    wave_val = enveloppe.apply(oscillator.generateSound(duration) + oscillatorC.generateSound(duration) + oscillatorCC.generateSound(duration))
+    #wave_valE = enveloppe.apply(oscillatorE.generateSound(duration))
+    #wave_valG = enveloppe.apply(oscillatorG.generateSound(duration))
 
     #wave_val = wave_valC + 0.8*wave_valE + 0.8*wave_valG
 
-    #max_amplitude = max(abs(wave_val))
-    #wave_val = wave_val / max_amplitude
+    max_amplitude = max(abs(wave_val))
+    wave_val = wave_val / max_amplitude
 
-    wave_val = np.append(wave_valC, [wave_valE, wave_valG])
+    #wave_val = np.append(wave_valC, [wave_valE, wave_valG])
 
     #visualise(wave_val)
 

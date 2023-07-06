@@ -14,10 +14,4 @@ class SawtoothWaveOscillator(BaseOscillator):
         phase = (t * self.freq) % 1
         wave = 2 * phase - 1
 
-
-        release_duration = 0.2  # Duration of the release phase in seconds
-        release_samples = int(release_duration * self.sampleRate)
-
-        decay = np.exp(-np.linspace(0, 5, release_samples))
-        wave[-release_samples:] *= decay
         return wave
