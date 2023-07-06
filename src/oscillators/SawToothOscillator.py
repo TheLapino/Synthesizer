@@ -1,7 +1,6 @@
 import numpy as np
 from math import pi
 
-from src.visualiser import visualiseSignal
 from .BaseOscillator import BaseOscillator
 
 
@@ -14,7 +13,6 @@ class SawtoothWaveOscillator(BaseOscillator):
         period = self.sampleRate / self.freq
         phase = (t * self.freq) % 1
         wave = 2 * phase - 1
-
 
 
         release_duration = 0.2  # Duration of the release phase in seconds

@@ -1,7 +1,6 @@
 import numpy as np
 from math import pi
 
-from src.visualiser.visualiser import visualiseSignal
 from .BaseOscillator import BaseOscillator
 
 

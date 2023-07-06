@@ -2,7 +2,6 @@ import numpy as np
 from math import pi
 
 from .BaseOscillator import BaseOscillator
-from src.visualiser.visualiser import visualiseSignal
 
 
 class SinWaveOscillator(BaseOscillator):
