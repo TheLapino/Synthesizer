@@ -21,5 +21,4 @@ class SinWaveOscillator(BaseOscillator):
         decay = np.exp(-np.linspace(0, 5, release_samples))
         wave[-release_samples:] *= decay
 
-        visualiseSignal(t, wave)
         return wave
