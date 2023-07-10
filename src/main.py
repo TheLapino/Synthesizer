@@ -9,42 +9,35 @@ import struct
 import numpy as np
 import sounddevice as sd
 
-sample_rate = 44100
-duration = 2
+SAMPLE_RATE = 44100
+DURATION = 2
+
 def main():
 
     oscillator = SquareWaveOscillator(261.63)
-    oscillatorC = SinWaveOscillator(261.63)
-    oscillatorCC = TriangleWaveOscillator(261.63)
-    oscillatorE = TriangleWaveOscillator(329.63)
-    oscillatorG = TriangleWaveOscillator(392.00)
-
     enveloppe = EnveloppeADSR()
 
-    wave_val = enveloppe.apply(oscillator.generateSound(duration) + oscillatorC.generateSound(duration) + oscillatorCC.generateSound(duration))
-    #wave_valE = enveloppe.apply(oscillatorE.generateSound(duration))
-    #wave_valG = enveloppe.apply(oscillatorG.generateSound(duration))
 
-    #wave_val = wave_valC + 0.8*wave_valE + 0.8*wave_valG
-
-    max_amplitude = max(abs(wave_val))
-    wave_val = wave_val / max_amplitude
-
-    #wave_val = np.append(wave_valC, [wave_valE, wave_valG])
-
-    #visualise(wave_val)
+    signal = enveloppe.apply(oscillator.generateSound(2))
 
 
-    sd.play(wave_val, sample_rate)
+    visualise(signal)
+
+    sd.play(signal, SAMPLE_RATE)
     sd.wait()
 
 
+
 def visualise(signal):
-    t = np.linspace(0, 2, int(sample_rate * duration), endpoint=False)
+    t = np.linspace(0, 2, int(SAMPLE_RATE * DURATION), endpoint=False)
     visualiseSignal(t, signal)
 
+def normalizeSignal(signal):
+    max_amplitude = max(abs(signal))
+    signal = signal / max_amplitude
+    return signal
 
-def save_wave_file(signal):
+def saveWaveFile(signal):
     wav_file=wave.open("test_audio.wav","w")
 
     nchannels = 1
@@ -52,7 +45,7 @@ def save_wave_file(signal):
     nframes = len(signal)
     comptype = "NONE"
     compname = "not compressed"
-    wav_file.setparams((nchannels, sampwidth, sample_rate, nframes, comptype, compname))
+    wav_file.setparams((nchannels, sampwidth, SAMPLE_RATE, nframes, comptype, compname))
 
     for sample in signal:
         wav_file.writeframes(struct.pack('h', int( sample * 32767.0 )))
