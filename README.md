@@ -1,7 +1,7 @@
 # Synthesizer
 
 # Developpement setup
-1. Create a virtualenv and activate it
+1. [Optional] Create a virtualenv and activate it
 
     With anaconda:
     ```
