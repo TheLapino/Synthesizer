@@ -1,6 +1,6 @@
 # Synthesizer
 
-# Developpement setup
+# Developement setup
 1. [Optional] Create a virtualenv and activate it
 
     With anaconda:
