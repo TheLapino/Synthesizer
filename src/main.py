@@ -1,12 +1,14 @@
+import wave
+import struct
+import numpy as np
+import sounddevice as sd
+
 from src.oscillators.SineOscillator import SinWaveOscillator
 from src.oscillators.SquareOscillator import SquareWaveOscillator
 from src.oscillators.TriangleOscillator import TriangleWaveOscillator
 from src.oscillators.SawToothOscillator import SawtoothWaveOscillator
 from src.visualiser.visualiser import visualiseSignal
-import wave
-import struct
-import numpy as np
-import sounddevice as sd
+
 
 sample_rate = 44100
 duration = 2
