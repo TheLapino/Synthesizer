@@ -1,10 +1,8 @@
 import numpy as np
-from .BaseOscillator import BaseOscillator
 from math import pi
-import sys
-sys.path.append('../src/visualiser')
 
-from visualiser import visualiseSignal
+from src.oscillators.BaseOscillator import BaseOscillator
+from src.visualiser.visualiser import visualiseSignal
 
 class SquareWaveOscillator(BaseOscillator):
 
@@ -19,4 +17,3 @@ class SquareWaveOscillator(BaseOscillator):
         decay = np.exp(-np.linspace(0, 5, release_samples))
         wave[-release_samples:] *= decay
         return wave
-
