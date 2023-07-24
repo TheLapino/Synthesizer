@@ -1,13 +1,15 @@
-from components.oscillators.SineOscillator import SinWaveOscillator
-from components.oscillators.SquareOscillator import SquareWaveOscillator
-from components.oscillators.TriangleOscillator import TriangleWaveOscillator
-from components.oscillators.SawtoothOscillator import SawtoothWaveOscillator
-from components.Enveloppe import EnveloppeADSR
-from visualiser.visualiser import visualiseSignal
 import wave
 import struct
 import numpy as np
 import sounddevice as sd
+
+from src.components.oscillators.SineOscillator import SinWaveOscillator
+from src.components.oscillators.SquareOscillator import SquareWaveOscillator
+from src.components.oscillators.TriangleOscillator import TriangleWaveOscillator
+from src.components.oscillators.SawtoothOscillator import SawtoothWaveOscillator
+from src.components.Enveloppe import EnveloppeADSR
+from src.visualiser.visualiser import visualiseSignal
+
 
 SAMPLE_RATE = 44100
 DURATION = 2
@@ -53,6 +55,6 @@ def saveWaveFile(signal):
     wav_file.close()
 
 
-
 if __name__ == "__main__":
     main()
+    

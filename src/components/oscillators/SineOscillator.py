@@ -1,7 +1,7 @@
 import numpy as np
 from math import pi
 
-from .BaseOscillator import BaseOscillator
+from src.components.oscillators.BaseOscillator import BaseOscillator
 
 
 class SinWaveOscillator(BaseOscillator):
