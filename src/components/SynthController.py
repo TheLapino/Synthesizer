@@ -1,7 +1,6 @@
 import pyaudio
 import numpy as np
-
-from NotesController import NotesController
+from .NotesController import NotesController
 
 class SynthController:
     def __init__(self, oscillator, bufferSize= 16):
@@ -23,5 +22,7 @@ class SynthController:
         self.stream.write(samples.astype(np.float32).tobytes())
 
 
-    def play():
-        pass
+    def play(self):
+        while True:
+            freq = self.NotesController.poll()
+            print(freq)

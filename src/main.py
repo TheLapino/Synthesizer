@@ -5,7 +5,8 @@ from components.oscillators.SawtoothOscillator import SawtoothWaveOscillator
 from components.Enveloppe import EnveloppeADSR
 from visualiser.visualiser import visualiseSignal
 from components.NotesController import NotesController
-from components.Notes.NotesFrequenciesMapper import NotesFrequenciesMapper
+from components.notes.NotesFrequenciesMapper import NotesFrequenciesMapper
+from components.SynthController import SynthController
 
 import wave
 import struct
@@ -26,8 +27,13 @@ stream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=True, f
 
 def main():
 
-    nc = NotesController()
+    
     oscillator = SinWaveOscillator(261.63)
+
+    synthctrl = SynthController(oscillator)
+    synthctrl.play()
+
+
     #enveloppe = EnveloppeADSR()aaa
     #signal = enveloppe.apply(oscillator.generateSound(2))
     #signal = oscillator.generateSound(DURATION)
@@ -48,8 +54,6 @@ def main():
     #        oscillator.freqSetter(392.00)
     #        play_sound(generator)
 
-    while True:
-        print(nc.poll())
     
 
 def get_samples(generator, buffer_size=BUFFER_SIZE):

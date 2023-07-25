@@ -1,5 +1,5 @@
 import keyboard
-import Notes.NotesFrequenciesMapper
+from .notes.NotesFrequenciesMapper import NotesFrequenciesMapper
 
 class NotesController():
 
@@ -23,8 +23,8 @@ class NotesController():
         }
 
     def poll(self):
-            
+        #todo: ajouter une verif pour voir derniere note joué
         for i in self.keysNotes.keys():
             if keyboard.is_pressed(i):
                 note = self.keysNotes[i]
-                return NotesFrequenciesMapper[note]
+                return self.NotesFrequenciesMapper.getFreqFromNote(note)
