@@ -12,3 +12,9 @@ class SquareWaveOscillator(BaseOscillator):
         wave = self.amp * np.sign(np.sin(2*pi*t*self.freq + self.phase))
         return wave
 
+    def generateSoundRealTime(self):
+        t = 0.0
+        while True:
+            sample = self.amp * np.sign(np.sin(2*pi*t*self.freq + self.phase))
+            t += 1.0 / self.sampleRate
+            yield sample

@@ -11,4 +11,8 @@ class BaseOscillator:
     
     def generateSound(self, duration=0.5):
         pass
+
+    
+    def freqSetter(self, freq):
+        self.freq = freq
         

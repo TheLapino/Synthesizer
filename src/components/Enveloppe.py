@@ -2,7 +2,7 @@ import numpy as np
 
 
 class EnveloppeADSR:
-    def __init__(self, attackTime=0.2, decayTime=0.05, releaseTime=0.5, sustainAmp=0.7, sampleRate=44100):
+    def __init__(self, attackTime=0.1, decayTime=0.05, releaseTime=0.1, sustainAmp=0.7, sampleRate=44100):
         self.attackTime = attackTime
         self.decayTime = decayTime
         self.releaseTime = releaseTime
@@ -13,7 +13,7 @@ class EnveloppeADSR:
         self.decaySteps = int(self.decayTime * self.sampleRate)
         self.releaseSteps = int(self.releaseTime * self.sampleRate)
 
-    def apply(self, signal):
+    def apply(self, signal) -> np.array:
 
 
         attack = np.linspace(0, 1, self.attackSteps)
