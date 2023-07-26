@@ -20,12 +20,16 @@ class SynthController:
 
 
     def playSound(self, generator):
-        samples = self.getSamples(generator, self.bufferSize)
+        samples = 0.1 * self.getSamples(generator, self.bufferSize)
         self.stream.write(samples.astype(np.float32).tobytes())
 
 
     def play(self):
+        lastFreq = 0
         while True:
             freq = self.NotesController.poll()
             self.oscillator.freqSetter(freq)
             self.playSound(self.OscGenerator)
+            if lastFreq != freq:
+                print(freq)
+            lastFreq = freq
