@@ -1,12 +1,11 @@
 import keyboard
-from .notes.NotesFrequenciesMapper import NotesFrequenciesMapper
+from components.notes.NotesFrequenciesMapper import NotesFrequenciesMapper
+from components.NotesContainer import NotesContainer
 
 class NotesController():
-
     def __init__(self):
-        
         self.NotesFrequenciesMapper = NotesFrequenciesMapper()
-
+        self.notesContainer = NotesContainer()
         self.keysNotes = {
             'z': "C4",
             's': "C#4",
@@ -19,12 +18,20 @@ class NotesController():
             'h': "G#4",
             'n': "A4",
             'j': "A#4",
-            'm': "B4"
+            'm': "B4",
+            ',': "C5"
         }
-
     def poll(self):
         #todo: ajouter une verif pour voir derniere note joué
+        noteFreq = 0
         for i in self.keysNotes.keys():
+            note = self.keysNotes[i]
+            noteFreq = self.NotesFrequenciesMapper.getFreqFromNote(note)
+            
             if keyboard.is_pressed(i):
-                note = self.keysNotes[i]
-                return self.NotesFrequenciesMapper.getFreqFromNote(note)
+                self.notesContainer.addNote(noteFreq)
+            else:
+                self.notesContainer.removeNote(noteFreq)
+
+        return self.notesContainer.getNote()
+

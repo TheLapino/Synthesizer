@@ -19,7 +19,7 @@ import pyaudio
 
 SAMPLE_RATE = 44100
 DURATION = 2
-BUFFER_SIZE = 16
+BUFFER_SIZE = 32
 
 p = pyaudio.PyAudio()
 stream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=True, frames_per_buffer=BUFFER_SIZE)
@@ -28,33 +28,12 @@ stream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=True, f
 def main():
 
     
-    oscillator = SinWaveOscillator(261.63)
+    oscillator = SquareWaveOscillator(261.63)
 
     synthctrl = SynthController(oscillator)
     synthctrl.play()
 
 
-    #enveloppe = EnveloppeADSR()aaa
-    #signal = enveloppe.apply(oscillator.generateSound(2))
-    #signal = oscillator.generateSound(DURATION)
-    #visualise(signal)
-    #sd.play(signal, SAMPLE_RATE)z
-    #sd.wait()
-
-    generator = oscillator.generateSoundRealTime()
-
-    #while True:
-    #    if keyboard.is_pressed("z"):
-    #        oscillator.freqSetter(261.63)
-    #        play_sound(generator)
-    #    if keyboard.is_pressed("x"):
-    #        oscillator.freqSetter(329.63)
-    #        play_sound(generator)
-    #    if keyboard.is_pressed("c"):
-    #        oscillator.freqSetter(392.00)
-    #        play_sound(generator)
-
-    
 
 def get_samples(generator, buffer_size=BUFFER_SIZE):
     samples = [next(generator) for _ in range(buffer_size)]
