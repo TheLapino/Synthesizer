@@ -7,11 +7,13 @@ class NotesController():
     def __init__(self, root, octave):
 
         keyMap = ['z','s','x','d','c','f','v','g','b','h','n','j','m','k',',','l','.',';','é']
+
         self.NotesFrequenciesMapper = NotesFrequenciesMapper()
         self.notesContainer = NotesContainer()
         self.NotesMapper = NotesOctaveMapper(keyMap, root, octave)
         self.keysNotes = self.NotesMapper.getNotesMapper()
 
+        self.NotesMapper.showNotesMapper()
 
     def poll(self):
         noteFreq = 0

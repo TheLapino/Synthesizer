@@ -1,38 +1,62 @@
 class NotesOctaveMapper:
-    def __init__(self, keyMap, root="B", octave=4):
 
+    def __init__(self, keyMap, root="B", octave=4):
         self.notesTemplate = ["C","C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
         self.notesMap = {}
         self.keyMap = keyMap
         self.root = root
         self.octave = octave
 
-        self._configureNotesMapper()
+        self.__configureNotesMapper()
 
 
+    def __configureNotesMapper(self):
 
-    def _configureNotesMapper(self):
-        startingIdx = self.notesTemplate.index(self.root)
-        lastNote = f"{self.root}{self.octave}"
+        noteIdx = self.__getStartingNoteIdx()
+        lastNote = self.__getFirstNote()
 
-
-        for i in range(len(self.keyMap)):
+        for keyIdx in range(len(self.keyMap)):
             
-            note = self.notesTemplate[startingIdx % len(self.notesTemplate)] + f"{self.octave}"
-
-            if lastNote == f"E{self.octave}" or lastNote == f"B{self.octave}":
+            if self.__lastNoteisBOrE(lastNote):
                 lastNote = ""
                 continue
-            
-            if note[0] == "C" and len(note) == 2 and i != 0:
-                self.octave += 1
-                note = self.notesTemplate[startingIdx % len(self.notesTemplate)] + f"{self.octave}"
-            
-            self.notesMap[self.keyMap[i]] = note
 
-            startingIdx += 1
+            note = self.__assignNoteToKey(keyIdx, noteIdx)
+
+            noteIdx += 1
             lastNote = note
 
+
+    def __lastNoteisBOrE(self, lastNote):
+        if lastNote == f"E{self.octave}" or lastNote == f"B{self.octave}":
+            return True
+        return False
+    
+    def __newOctave(self, note):
+        if note == f"C{self.octave}":
+            return True
+        return False
+    
+    def __getNote(self, noteIdx):
+        return self.notesTemplate[noteIdx % len(self.notesTemplate)] + f"{self.octave}"
+    
+    def __getStartingNoteIdx(self):
+        return self.notesTemplate.index(self.root)
+    
+
+    def __getFirstNote(self):
+        return f"{self.root}{self.octave}"
+    
+
+    def __assignNoteToKey(self, keyIdx, noteIdx):
+        note = self.__getNote(noteIdx)
+        
+        if self.__newOctave(note) and keyIdx != 0:
+            self.octave += 1
+            note = self.__getNote(noteIdx)
+        
+        self.notesMap[self.keyMap[keyIdx]] = note
+        return note
 
     def getNotesMapper(self):
         return self.notesMap

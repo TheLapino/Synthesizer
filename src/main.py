@@ -28,8 +28,10 @@ stream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=True, f
 
 def main():
 
-    oscillator = SquareWaveOscillator(261.63)
-    synthctrl = SynthController(oscillator, root="C", octave=5)
+    oscillator = SawtoothWaveOscillator(261.63)
+
+    synthctrl = SynthController(oscillator, root="C", octave=3)
+
     synthctrl.play()
 
 
