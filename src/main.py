@@ -7,6 +7,7 @@ from visualiser.visualiser import visualiseSignal
 from components.NotesController import NotesController
 from components.notes.NotesFrequenciesMapper import NotesFrequenciesMapper
 from components.SynthController import SynthController
+from components.notes.NotesOctaveMapper import NotesOctaveMapper
 
 import wave
 import struct
@@ -27,9 +28,8 @@ stream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=True, f
 
 def main():
 
-    
-    oscillator = SawtoothWaveOscillator(261.63)
-    synthctrl = SynthController(oscillator)
+    oscillator = SquareWaveOscillator(261.63)
+    synthctrl = SynthController(oscillator, root="C", octave=5)
     synthctrl.play()
 
 

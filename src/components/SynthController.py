@@ -3,11 +3,10 @@ import numpy as np
 from components.NotesController import NotesController
 
 class SynthController:
-    def __init__(self, oscillator, bufferSize= 32):
+    def __init__(self, oscillator, bufferSize = 32, root="C", octave=4):
         self.oscillator = oscillator
         self.bufferSize = bufferSize
-        self.NotesController = NotesController()
-        self.oscillator
+        self.NotesController = NotesController(root, octave)
         self.OscGenerator = self.oscillator.generateSoundRealTime()
 
         p = pyaudio.PyAudio()
@@ -27,9 +26,9 @@ class SynthController:
     def play(self):
         lastFreq = 0
         while True:
-            freq = self.NotesController.poll()
+            freq, note = self.NotesController.poll()
             self.oscillator.freqSetter(freq)
             self.playSound(self.OscGenerator)
-            if lastFreq != freq:
-                print(freq)
+            if lastFreq != freq and freq != 0:
+                print(f"{note}: {freq}")
             lastFreq = freq

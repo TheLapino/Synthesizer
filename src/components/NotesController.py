@@ -1,37 +1,33 @@
 import keyboard
 from components.notes.NotesFrequenciesMapper import NotesFrequenciesMapper
 from components.NotesContainer import NotesContainer
+from components.notes.NotesOctaveMapper import NotesOctaveMapper
 
 class NotesController():
-    def __init__(self):
+    def __init__(self, root, octave):
+
+        keyMap = ['z','s','x','d','c','f','v','g','b','h','n','j','m','k',',','l','.',';','é']
         self.NotesFrequenciesMapper = NotesFrequenciesMapper()
         self.notesContainer = NotesContainer()
-        self.keysNotes = {
-            'z': "C4",
-            's': "C#4",
-            'x': "D4",
-            'd': "D#4",
-            'c': "E4",
-            'v': "F4",
-            'g': "F#4",
-            'b': "G4",
-            'h': "G#4",
-            'n': "A4",
-            'j': "A#4",
-            'm': "B4",
-            ',': "C5"
-        }
+        self.NotesMapper = NotesOctaveMapper(keyMap, root, octave)
+        self.keysNotes = self.NotesMapper.getNotesMapper()
+
+
     def poll(self):
-        #todo: ajouter une verif pour voir derniere note joué
         noteFreq = 0
         for i in self.keysNotes.keys():
             note = self.keysNotes[i]
-            noteFreq = self.NotesFrequenciesMapper.getFreqFromNote(note)
+            #noteFreq = self.NotesFrequenciesMapper.getFreqFromNote(note)
             
             if keyboard.is_pressed(i):
-                self.notesContainer.addNote(noteFreq)
+                self.notesContainer.addNote(note)
             else:
-                self.notesContainer.removeNote(noteFreq)
+                self.notesContainer.removeNote(note)
 
-        return self.notesContainer.getNote()
+        note = self.notesContainer.getNote()
+
+        if not note:
+            return 0, ""
+        noteFreq = self.NotesFrequenciesMapper.getFreqFromNote(note)
+        return noteFreq, note
 
