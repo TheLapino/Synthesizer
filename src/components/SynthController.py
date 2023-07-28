@@ -1,8 +1,8 @@
 import pyaudio
 import numpy as np
 
-from components.NotesController import NotesController
-from components.Enveloppe import EnveloppeADSR
+from src.components.NotesController import NotesController
+from src.components.Enveloppe import EnveloppeADSR
 
 class SynthController:
     def __init__(self, oscillator, enveloppeADSR: EnveloppeADSR, bufferSize = 32, root="C", octave=4):

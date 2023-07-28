@@ -1,7 +1,7 @@
 import keyboard
-from components.notes.NotesFrequenciesMapper import NotesFrequenciesMapper
-from components.NotesContainer import NotesContainer
-from components.notes.NotesOctaveMapper import NotesOctaveMapper
+from src.components.notes.NotesFrequenciesMapper import NotesFrequenciesMapper
+from src.components.NotesContainer import NotesContainer
+from src.components.notes.NotesOctaveMapper import NotesOctaveMapper
 
 class NotesController():
     def __init__(self, root, octave):
