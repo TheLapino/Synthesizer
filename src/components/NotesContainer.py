@@ -8,7 +8,11 @@ class NotesContainer:
 
     def removeNote(self, note):
         if note in self.heldNotes:
-            self.heldNotes.remove(note)
+            if note == self.heldNotes[-1]:
+                self.heldNotes.remove(note)
+                self.heldNotes.sort()
+            else:
+                self.heldNotes.remove(note)
 
     def getNote(self):
         if self.isEmpty():
