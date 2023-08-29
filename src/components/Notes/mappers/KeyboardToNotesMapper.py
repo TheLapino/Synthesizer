@@ -1,4 +1,4 @@
-class NotesOctaveMapper:
+class KeyboardToNotesMapper:
 
     def __init__(self, keyMap, root="B", octave=4):
         self.notesTemplate = ["C","C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]

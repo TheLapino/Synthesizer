@@ -12,11 +12,8 @@ class SinWaveOscillator(IOscillator):
         wave = self.amp * np.sin(2*pi*t*self.freq + self.phase)
         return wave
 
+    def _getValue(self):
+        sample = self.amp * np.sin(2*pi*self.t*self.freq + self.phase)
+        return sample
+    
 
-    def generateSoundRealTime(self):
-        t = 0.0
-        while True:
-            sample = self.amp * np.sin(2*pi*t*self.freq + self.phase)
-            sample *= self.volume
-            t += 1.0 / self.sampleRate
-            yield sample * self.volume

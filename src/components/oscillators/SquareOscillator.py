@@ -11,11 +11,8 @@ class SquareWaveOscillator(IOscillator):
         t = np.linspace(0, duration, numberSamples, endpoint=False)
         wave = self.amp * np.sign(np.sin(2*pi*t*self.freq + self.phase))
         return wave
+    
+    def _getValue(self):
+        sample = self.amp * np.sign(np.sin(2*pi*self.t*self.freq + self.phase))
+        return sample
 
-    def generateSoundRealTime(self):
-        t = 0.0
-        while True:
-            sample = self.amp * np.sign(np.sin(2*pi*t*self.freq + self.phase))
-            sample *= self.volume
-            t += 1.0 / self.sampleRate
-            yield sample * self.volume

@@ -1,16 +1,17 @@
 import keyboard
-from src.components.notes.NotesFrequenciesMapper import NotesFrequenciesMapper
-from src.components.NotesContainer import NotesContainer
-from src.components.notes.NotesOctaveMapper import NotesOctaveMapper
+from src.components.notes.mappers.NotesToFrequenciesMapper import NotesToFrequenciesMapper
+from src.components.notes.NotesContainer import NotesContainer
+from src.components.notes.mappers.KeyboardToNotesMapper import KeyboardToNotesMapper
+from src.components.notes.Note import Note
 
 class NotesController():
     def __init__(self, root, octave):
 
         keyMap = ['z','s','x','d','c','f','v','g','b','h','n','j','m','k',',','l','.',';','é']
 
-        self.NotesFrequenciesMapper = NotesFrequenciesMapper()
+        self.NotesFrequenciesMapper = NotesToFrequenciesMapper()
         self.notesContainer = NotesContainer()
-        self.NotesMapper = NotesOctaveMapper(keyMap, root, octave)
+        self.NotesMapper = KeyboardToNotesMapper(keyMap, root, octave)
         self.keysNotes = self.NotesMapper.getNotesMapper()
 
         self.NotesMapper.showNotesMapper()
@@ -28,10 +29,11 @@ class NotesController():
         note = self.notesContainer.getNote()
 
         if note == "":
-            return -1, ""
+            return Note("exit Note", -1)
 
         if not note:
-            return 0, ""
+            return Note("No note", 0)
+        
         noteFreq = self.NotesFrequenciesMapper.getFreqFromNote(note)
-        return noteFreq, note
+        return Note(note, noteFreq)
 

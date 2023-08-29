@@ -9,6 +9,7 @@ class IOscillator:
         self.octaveShift = octaveShift
         self.volume = volume
         self.sampleRate = sampleRate
+        self.t = 0.0
 
     
     def generateSound(self, duration=0.5):
@@ -16,8 +17,13 @@ class IOscillator:
 
 
     def generateSoundRealTime(self):
-        pass
+        while True:
+            sampleValue = self._getValue() * self.volume
+            self.t += 1.0 / self.sampleRate
+            yield sampleValue 
 
+    def _getValue(self):
+        return 0.0
 
     def freqSetter(self, freq):
         self.freq = freq * (2**self.octaveShift)

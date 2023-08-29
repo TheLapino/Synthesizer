@@ -3,11 +3,8 @@ from src.components.oscillators.SquareOscillator import SquareWaveOscillator
 from src.components.oscillators.TriangleOscillator import TriangleWaveOscillator
 from src.components.oscillators.SawtoothOscillator import SawtoothWaveOscillator
 from src.components.oscillators.CombinedOscillator import CombinedOscillator
-from src.components.Enveloppe import EnveloppeADSR
-from src.components.NotesController import NotesController
-from src.components.notes.NotesFrequenciesMapper import NotesFrequenciesMapper
+from src.components.modifiers.Enveloppe import EnveloppeADSR
 from src.components.SynthController import SynthController
-from src.components.notes.NotesOctaveMapper import NotesOctaveMapper
 from src.visualiser.visualiser import visualiseSignal
 
 
@@ -21,7 +18,7 @@ BUFFER_SIZE = 64
 def main():
 
     oscillator1 = SawtoothWaveOscillator(octaveShift=0, volume=0.6)
-    oscillator2 = TriangleWaveOscillator(octaveShift=-1, volume=0.8)
+    oscillator2 = TriangleWaveOscillator(octaveShift=0, volume=0.8)
     oscillator3 = SquareWaveOscillator(octaveShift=0, volume=1)
     oscillator4 = SinWaveOscillator(octaveShift=-1, volume=1)
 
@@ -37,8 +34,6 @@ def main():
     print("--------------------Now playing--------------------")
     synthctrl.play()
 
-    oscGenenrator = cOscillator.generateSoundRealTime()
-    visualise(generateSample(oscGenenrator))
 
 
 

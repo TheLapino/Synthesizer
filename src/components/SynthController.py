@@ -2,8 +2,9 @@ import pyaudio
 import numpy as np
 import matplotlib.pyplot as plt
 
-from src.components.NotesController import NotesController
-from src.components.Enveloppe import EnveloppeADSR
+from src.components.notes.NotesController import NotesController
+from src.components.notes.Note import Note
+from src.components.modifiers.Enveloppe import EnveloppeADSR
 from src.components.oscillators.IOscillator import IOscillator
 class SynthController:
     def __init__(self, oscillator: IOscillator, enveloppeADSR: EnveloppeADSR, bufferSize=32, root="C", octave=4):
@@ -33,7 +34,7 @@ class SynthController:
         samples = self.getSamples()
         amps = self.getSamplesEnveloppeAmp()
         samples *= amps
-        #self.signal = np.append(self.signal, samples)
+        self.signal = np.append(self.signal, samples)
         self.stream.write(samples.astype(np.float32).tobytes())
 
 
@@ -41,26 +42,28 @@ class SynthController:
         lastFreq = 0
         while True:
 
-            freq, note = self.NotesController.poll()
+            #freq, note = self.NotesController.poll()
+
+            note = self.NotesController.poll()
             
-            if freq == -1:
+            if note.getFreq() == -1:
                 break
 
-            if lastFreq != freq and freq != 0:
+            if lastFreq != note.getFreq() and note.getFreq() != 0:
                 self.enveloppeADSR.resetEnveloppe()
                 self.enveloppeADSR.noteIsPressed()
-                self.oscillator.freqSetter(freq)
-                print(f"{note}: {freq}")
+                self.oscillator.freqSetter(note.getFreq())
+                print(f"{note.getName()}: {note.getFreq()}")
 
-            if lastFreq != freq and freq == 0:
+            if lastFreq != note.getFreq() and note.getFreq() == 0:
                 self.enveloppeADSR.noteIsNotPressed()
                 if self.enveloppeADSR.releaseEnded():
-                    self.oscillator.freqSetter(freq)
+                    self.oscillator.freqSetter(note.getFreq())
 
             
             self.playSound()
-            lastFreq = freq
-        #self.showSignal()
+            lastFreq = note.getFreq()
+        self.showSignal()
         
 
     def showSignal(self):

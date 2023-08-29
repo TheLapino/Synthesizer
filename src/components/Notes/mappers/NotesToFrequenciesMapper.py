@@ -1,10 +1,10 @@
 import json
 
 
-class NotesFrequenciesMapper:
+class NotesToFrequenciesMapper:
     def __init__(self):
-
-        notesFrequenciesJson = open("C:/Users/rempl/OneDrive/Documents/Projets Python/Synthesizer/src/components/Notes/NotesFrequencies.json")
+        pathNotesFrequencies = "./src/components/Notes/NotesFrequencies.json"
+        notesFrequenciesJson = open(pathNotesFrequencies)
         self.notesFrequenciesMap = json.load(notesFrequenciesJson)
     
 
