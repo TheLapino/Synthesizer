@@ -1,10 +1,10 @@
 import numpy as np
 from math import pi
 
-from src.components.oscillators.BaseOscillator import BaseOscillator
+from src.components.oscillators.IOscillator import IOscillator
 
 
-class SinWaveOscillator(BaseOscillator):
+class SinWaveOscillator(IOscillator):
 
     def generateSound(self, duration):
         numberSamples = int(self.sampleRate * duration)
@@ -17,5 +17,6 @@ class SinWaveOscillator(BaseOscillator):
         t = 0.0
         while True:
             sample = self.amp * np.sin(2*pi*t*self.freq + self.phase)
+            sample *= self.volume
             t += 1.0 / self.sampleRate
-            yield sample
+            yield sample * self.volume

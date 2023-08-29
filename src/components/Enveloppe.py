@@ -24,23 +24,25 @@ class EnveloppeADSR:
 
     def generateEnveloppeAmps(self):
         while True:
+            self.t += 1.0 / self.sampleRate
             if self.t < self.attackTime and self.notePressed:
                 self.lastAmp = self.getAttackValue()
                 yield self.lastAmp
             
-            if self.t >= self.attackTime and self.t < self.decayTime and self.notePressed:
+            elif self.t >= self.attackTime and self.t < self.decayTime and self.notePressed:
                 self.lastAmp = self.getDecayValue()
                 yield self.lastAmp
-            
-            if self.t >= self.decayTime and self.notePressed:
+    
+            elif self.t >= self.decayTime and self.notePressed:
                 self.lastAmp = self.getSustainValue()
                 yield self.lastAmp
 
-            if self.t < self.releaseEndTime and not self.notePressed:
+            elif self.t < self.releaseEndTime and not self.notePressed:
                 yield self.getReleaseValue()
             
-            yield 0
-            self.t += 1.0 / self.sampleRate
+            else:
+                yield 0
+            
 
 
     def getAttackSlope(self):

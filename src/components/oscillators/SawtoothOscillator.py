@@ -1,10 +1,9 @@
 import numpy as np
-from math import pi
 
-from src.components.oscillators.BaseOscillator import BaseOscillator
+from src.components.oscillators.IOscillator import IOscillator
 
 
-class SawtoothWaveOscillator(BaseOscillator):
+class SawtoothWaveOscillator(IOscillator):
 
     def generateSound(self, duration):
         numberSamples = int(self.sampleRate * duration)
@@ -20,5 +19,6 @@ class SawtoothWaveOscillator(BaseOscillator):
         while True:
             phase = (t * self.freq) % 1
             sample = 2 * phase - 1
+            sample *= self.volume
             t += 1.0 / self.sampleRate
-            yield sample
+            yield sample * self.volume

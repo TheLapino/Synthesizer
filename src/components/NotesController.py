@@ -19,7 +19,6 @@ class NotesController():
         noteFreq = 0
         for i in self.keysNotes.keys():
             note = self.keysNotes[i]
-            #noteFreq = self.NotesFrequenciesMapper.getFreqFromNote(note)
             
             if keyboard.is_pressed(i):
                 self.notesContainer.addNote(note)
@@ -27,6 +26,9 @@ class NotesController():
                 self.notesContainer.removeNote(note)
 
         note = self.notesContainer.getNote()
+
+        if note == "":
+            return -1, ""
 
         if not note:
             return 0, ""

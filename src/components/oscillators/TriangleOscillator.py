@@ -1,10 +1,9 @@
 import numpy as np
-from math import pi
 
-from src.components.oscillators.BaseOscillator import BaseOscillator
+from src.components.oscillators.IOscillator import IOscillator
 
 
-class TriangleWaveOscillator(BaseOscillator):
+class TriangleWaveOscillator(IOscillator):
 
     def generateSound(self, duration):
         numberSamples = int(self.sampleRate * duration)
@@ -18,6 +17,7 @@ class TriangleWaveOscillator(BaseOscillator):
         while True:
             phase = t * self.freq
             sample = 2 * np.abs(2 * (phase - np.floor(phase + 0.5))) - 1
+            sample *= self.volume
             t += 1.0 / self.sampleRate
-            yield sample
+            yield sample * self.volume
 

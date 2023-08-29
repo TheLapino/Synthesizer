@@ -7,6 +7,8 @@ class NotesOctaveMapper:
         self.root = root
         self.octave = octave
 
+        self.__addExitKey()
+
         self.__configureNotesMapper()
 
 
@@ -65,4 +67,8 @@ class NotesOctaveMapper:
     def showNotesMapper(self):
         for k in self.notesMap.keys():
             print(f"{k}: {self.notesMap[k]}")
+
+
+    def __addExitKey(self):
+        self.notesMap["esc"] = ""
 
