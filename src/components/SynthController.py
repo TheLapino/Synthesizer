@@ -18,7 +18,7 @@ class SynthController:
         self.signal = np.empty(1)
 
         p = pyaudio.PyAudio()
-        self.stream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=True, frames_per_buffer=self.bufferSize)
+        self.soundStream = p.open(format=pyaudio.paFloat32, channels=1, rate=44100, output=True, frames_per_buffer=self.bufferSize)
 
 
     def getSamples(self):
@@ -34,15 +34,13 @@ class SynthController:
         samples = self.getSamples()
         amps = self.getSamplesEnveloppeAmp()
         samples *= amps
-        self.signal = np.append(self.signal, samples)
-        self.stream.write(samples.astype(np.float32).tobytes())
+        self.soundStream.write(samples.astype(np.float32).tobytes())
 
 
     def play(self):
         lastFreq = 0
         while True:
 
-            #freq, note = self.NotesController.poll()
 
             note = self.NotesController.poll()
             
@@ -63,7 +61,6 @@ class SynthController:
             
             self.playSound()
             lastFreq = note.getFreq()
-        self.showSignal()
         
 
     def showSignal(self):
