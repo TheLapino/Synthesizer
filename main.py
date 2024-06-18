@@ -17,17 +17,17 @@ BUFFER_SIZE = 64
 
 def main():
 
-    oscillator1 = SawtoothWaveOscillator(octaveShift=-1, volume=0.6)
+    oscillator1 = SawtoothWaveOscillator(octaveShift=0, volume=0.2)
     oscillator2 = TriangleWaveOscillator(octaveShift=0, volume=0.8)
     oscillator3 = SquareWaveOscillator(octaveShift=0, volume=0.5)
     oscillator4 = SinWaveOscillator(octaveShift=-1, volume=1)
     oscillator5 = SawtoothWaveOscillator(octaveShift=-2, volume=0.6)
 
-    cOscillator = CombinedOscillator( [oscillator3, oscillator1, oscillator4, oscillator2])
+    cOscillator = CombinedOscillator( [oscillator1])
 
     enveloppe = EnveloppeADSR(attackTime=0.001, decayTime=0.2, releaseTime=0.5, sustainAmp=0.8)
 
-    synthctrl = SynthController(cOscillator, enveloppe, root="G", octave=3, bufferSize=BUFFER_SIZE)
+    synthctrl = SynthController(cOscillator, enveloppe, root="C", octave=3, bufferSize=BUFFER_SIZE)
 
 
     print("--------------------Now playing--------------------")
@@ -36,9 +36,9 @@ def main():
 
 def test():
     oscillator3 = SquareWaveOscillator(octaveShift=0, volume=0.5)
-    enveloppe = EnveloppeADSR(attackTime=0.001, decayTime=0.2, releaseTime=0.5, sustainAmp=0.8)
+    enveloppe = EnveloppeADSR(attackTime=0.1, decayTime=0.2, releaseTime=5., sustainAmp=0.8)
 
-    synthctrl = SynthController(oscillator3, enveloppe, root="C", octave=4, bufferSize=BUFFER_SIZE)
+    synthctrl = SynthController(oscillator3, enveloppe, root="C", octave=3, bufferSize=BUFFER_SIZE)
 
     print("--------------------Now playing--------------------")
     synthctrl.play()
@@ -55,5 +55,5 @@ def generateSample(oscGen):
 
 
 if __name__ == "__main__":
-    #main()
-    test()
+    main()
+    #test()

@@ -10,8 +10,8 @@ class SquareWaveOscillator(IOscillator):
 
     def __init__(self, freq=1, amp=1, phase=0, octaveShift=0, volume=1.0, sampleRate=44100):
         super().__init__(freq=1, amp=1, phase=0, octaveShift=0, volume=1.0, sampleRate=44100)
-        self.signalFullPeriod = self.generateSoundFullPeriod()
-        self.full_period_index = len(self.signalFullPeriod)
+        #self.signalFullPeriod = self.generateSoundFullPeriod()
+        #self.full_period_index = len(self.signalFullPeriod)
 
     def generateSound(self, duration):
         numberSamples = int(self.sampleRate * duration)
@@ -19,29 +19,21 @@ class SquareWaveOscillator(IOscillator):
         wave = self.amp * np.sign(np.sin(2*pi*t*self.freq + self.phase))
         return wave
     
+    
     def _getValue(self):
         sample = self.amp * np.sign(np.sin(2*pi*self.t*self.freq + self.phase))
         return sample
-    
+    """
     def generateSoundRealTime(self):
         t = 0
         while True:
             sampleValue = self.signalFullPeriod[t % self.full_period_index]# * self.volume
             t += 1
             yield sampleValue 
-
-    
-    def freqSetter(self, freq):
-        super().freqSetter(freq)
-        self.signalFullPeriod = self.generateSoundFullPeriod()
-        self.full_period_index = len(self.signalFullPeriod)
-
-    
-    def _getValueWithTime(self, time):
-        sample = self.amp * np.sign(np.sin(2*pi*time*self.freq + self.phase))
-        return sample
+"""
 
 
+"""
     def generateSoundFullPeriod(self):
         period = 1 / self.freq
         two_period = 2 * period
@@ -49,7 +41,7 @@ class SquareWaveOscillator(IOscillator):
         t = np.linspace(0, two_period, sampling_rate_for_freq)
         samples = np.array([self._getValueWithTime(time) for time in t])
 
-        CUTOFF = 1500
+        CUTOFF = 500
 
         samples_cutoff = butter_lowpass_filter(samples, CUTOFF, 44100, 2)
 
@@ -73,3 +65,8 @@ def butter_lowpass_filter(data, cutoff, fs, order=1):
     b, a = butter_lowpass(cutoff, fs, order=order)
     y = lfilter(b, a, data)
     return y
+
+def _getValue(self):
+    sample = self.amp * np.sign(np.sin(2*pi*self.t*self.freq + self.phase))
+    return sample
+    """
